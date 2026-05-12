@@ -1,0 +1,50 @@
+<div class="container">
+  <div class="header">
+    <h1>📋 Task Manager</h1>
+    <button class="btn btn-primary" (click)="openCreate()">+ New Task</button>
+  </div>
+
+  <div class="filters">
+    <select [(ngModel)]="filterStatus" (change)="applyFilter()">
+      <option value="">All Status</option>
+      <option value="Pending">Pending</option>
+      <option value="InProgress">In Progress</option>
+      <option value="Done">Done</option>
+    </select>
+
+    <select [(ngModel)]="filterPriority" (change)="applyFilter()">
+      <option value="">All Priority</option>
+      <option value="Low">Low</option>
+      <option value="Medium">Medium</option>
+      <option value="High">High</option>
+    </select>
+  </div>
+
+  <div class="task-grid">
+    <div class="task-card" *ngFor="let task of filteredTasks">
+      <div class="task-card-header">
+        <h3>{{ task.title }}</h3>
+        <div class="badges">
+          <span class="badge" [ngClass]="getStatusClass(task.status)">{{ task.status }}</span>
+          <span class="badge" [ngClass]="getPriorityClass(task.priority)">{{ task.priority }}</span>
+        </div>
+      </div>
+      <p class="description">{{ task.description }}</p>
+      <p class="due-date" *ngIf="task.dueDate">📅 Due: {{ task.dueDate | date:'mediumDate' }}</p>
+      <div class="task-actions">
+        <button class="btn btn-edit" (click)="openEdit(task)">✏️ Edit</button>
+        <button class="btn btn-delete" (click)="delete(task.id)">🗑️ Delete</button>
+      </div>
+    </div>
+
+    <div class="no-tasks" *ngIf="filteredTasks.length === 0">
+      <p>No tasks found. Click "+ New Task" to add one.</p>
+    </div>
+  </div>
+
+  <app-task-form
+    *ngIf="showForm"
+    [task]="selectedTask"
+    (close)="onFormClose()">
+  </app-task-form>
+</div>

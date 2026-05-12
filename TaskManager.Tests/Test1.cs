@@ -1,10 +1,3 @@
-﻿namespace TaskManager.Tests;
-
-[TestClass]
-public sealed class Test1
-{
-    [TestMethod]
-    public void TestMethod1()
-    {
-    }
-}
+// This file is intentionally left empty.
+// All tests are in TasksControllerTests.cs and TaskItemModelTests.cs
+namespace TaskManager.Tests;
